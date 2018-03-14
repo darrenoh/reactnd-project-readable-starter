@@ -1,9 +1,12 @@
+/**
+ * @file
+ * List of posts
+ */
+
 import React from 'react';
 
 const PostList = props => (
-  <p className="App-intro">
-    List of posts
-  </p>
+  <br />
 );
 
 export default PostList;
