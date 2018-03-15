@@ -7,8 +7,8 @@ export const receiveCategories = categories => ({
   categories
 });
 
-export const fetchCategories = () => dispatch => (
+export const fetchCategories = () => dispatch => {
   API
     .fetchCategories()
-    .then(categories => dispatch(receiveCategories(categories)))
-);
+    .then(categories => dispatch(receiveCategories(categories)));
+};

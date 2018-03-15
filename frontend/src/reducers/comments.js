@@ -15,10 +15,7 @@ function comments (state = {}, action) {
     case RECEIVE_POST_COMMENTS:
       return {
         ...state,
-        [parentId]: {
-          ...comments,
-          ...state[parentId]
-        }
+        [parentId]: comments
       }
     case RECEIVE_COMMENT:
     case ADD_COMMENT:
@@ -35,7 +32,10 @@ function comments (state = {}, action) {
         ...state,
         [comment.parentId]: {
           ...state[comment.parentId],
-          [comment.id]: null
+          [comment.id]: {
+            ...state[comment.parentId][comment.id],
+            deleted: true
+          }
         }
       };
     case UPVOTE_COMMENT:

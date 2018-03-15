@@ -1,13 +1,11 @@
-const API_HOST = process.env.REACT_APP_API_HOST;
-const API_AUTHORIZATION = process.env.REACT_APP_API_AUTHORIZATION;
+const API = process.env.REACT_APP_API;
+const AUTHORIZATION = process.env.REACT_APP_AUTHORIZATION;
 const headers = {
-  headers: {
-    Authorization: API_AUTHORIZATION
-  }
+  Authorization: AUTHORIZATION
 };
 
 export const fetchCategories = () => {
-  return fetch(API_HOST + '/categories', headers)
+  return fetch(API + '/categories', {headers})
     .then(res => res.json())
     .then((json) => {
       let categories = {};

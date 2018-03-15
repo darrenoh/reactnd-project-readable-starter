@@ -16,8 +16,8 @@ function posts (state = {}, action) {
     case RECEIVE_CATEGORY_POSTS:
     case RECEIVE_POSTS:
       return {
-        ...posts,
-        ...state.posts
+        ...state.posts,
+        ...posts
       }
     case RECEIVE_POST:
     case ADD_POST:
@@ -29,7 +29,10 @@ function posts (state = {}, action) {
     case REMOVE_POST:
       return {
         ...state,
-        [post.id]: null
+        [post.id]: {
+          ...state[post.id],
+          deleted: true
+        }
       };
     case UPVOTE_POST:
       return {
