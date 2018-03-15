@@ -63,21 +63,22 @@ class ListScreen extends Component {
         }
       }
     } = this.props;
+    let title = 'List of posts';
     category = category || '';
     if (category !== '') {
       if (typeof categories[category] === 'undefined') {
         return (
           <NotFoundScreen />
         );
-      }
-      else {
+      } else {
+        title = categories[category].name;
         posts = posts.filter(post => post.category === category);
       }
     }
     return (
       <div>
         <p className="App-intro">
-          List of posts
+          {title}
         </p>
         <CategoryList
           categories={Object.values(categories)}

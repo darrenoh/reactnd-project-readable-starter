@@ -6,12 +6,21 @@ const headers = {
   }
 };
 
-export const fetchPostComments = id => {
-  return fetch(API_HOST + '/posts/' + id + '/comments', headers)
-    .then(res => res.json());
+export const fetchPostComments = parentId => {
+  return fetch(API_HOST + '/posts/' + parentId + '/comments', headers)
+    .then(res => res.json())
+    .then(json => {
+      let comments = {};
+      json.map(comment => {
+        comments[comment.id] = comment;
+        return comment;
+      });
+      return comments;
+    });
 };
 
 export const fetchComment = id => {
   return fetch(API_HOST + '/comments/' + id, headers)
-    .then(res => res.json());
+    .then(res => res.json())
+    .then(json => json);
 };

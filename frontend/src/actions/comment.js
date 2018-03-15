@@ -8,15 +8,19 @@ export const UPDATE_COMMENT = 'UPDATE_COMMENT';
 export const UPVOTE_COMMENT = 'UPVOTE_COMMENT';
 export const DOWNVOTE_COMMENT = 'DOWNVOTE_COMMENT';
 
-export const receivePostComments = comments => ({
+export const receivePostComments = ({parentId, comments}) => ({
   type: RECEIVE_POST_COMMENTS,
+  parentId,
   comments
 });
 
-export const fetchPostComments = () => dispatch => (
+export const fetchPostComments = parentId => dispatch => (
   API
-    .fetchPostComments()
-    .then(comments => dispatch(receivePostComments(comments)))
+    .fetchPostComments(parentId)
+    .then(comments => dispatch(receivePostComments({
+      parentId,
+      comments
+    })))
 );
 
 export const receiveComment = comment => ({
@@ -24,9 +28,9 @@ export const receiveComment = comment => ({
   comment
 });
 
-export const fetchComment = () => dispatch => (
+export const fetchComment = id => dispatch => (
   API
-    .fetchComment()
+    .fetchComment(id)
     .then(comment => dispatch(receiveComment(comment)))
 );
 

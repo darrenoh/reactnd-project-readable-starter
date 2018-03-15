@@ -36,9 +36,9 @@ export const receivePost = post => ({
   post
 });
 
-export const fetchPost = () => dispatch => (
+export const fetchPost = id => dispatch => (
   API
-    .fetchPost()
+    .fetchPost(id)
     .then(post => dispatch(receivePost(post)))
 );
 
