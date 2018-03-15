@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ListScreen from './ListScreen';
 import DetailScreen from './DetailScreen';
@@ -13,21 +13,11 @@ const Readable = props => (
       <h1 className="App-title">Readable</h1>
     </header>
     <Switch>
-      <Route path="/post/:id" render={() => (
-        <DetailScreen />
-      )}/>
-      <Route exact path="/:category*" render={() => (
-        <ListScreen />
-      )}/>
+      <Route path="/post/:id" component={DetailScreen} />
+      <Route exact path="/:category*" component={ListScreen} />
+      <Route component={NotFoundScreen} />
     </Switch>
   </div>
 );
 
 export default Readable;
-
-/**
- * State
- * - Category list
- * - Post list
- * - Comment lists
- */
