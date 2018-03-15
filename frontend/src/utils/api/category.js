@@ -9,5 +9,12 @@ const headers = {
 export const fetchCategories = () => {
   return fetch(API_HOST + '/categories', headers)
     .then(res => res.json())
-    .then(({ categories }) => categories);
+    .then((json) => {
+      let categories = {};
+      json.categories.map(category => {
+        categories[category.path] = category;
+        return category;
+      });
+      return categories;
+    });
 };

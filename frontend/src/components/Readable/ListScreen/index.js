@@ -11,6 +11,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchCategories } from '../../../actions/category';
 import { fetchCategoryPosts, fetchPosts } from '../../../actions/post';
+import NotFoundScreen from '../NotFoundScreen';
 import CategoryList from '../CategoryList';
 import PostList from './PostList';
 
@@ -64,7 +65,14 @@ class ListScreen extends Component {
     } = this.props;
     category = category || '';
     if (category !== '') {
-      posts = posts.filter(post => post.category === category);
+      if (typeof categories[category] === 'undefined') {
+        return (
+          <NotFoundScreen />
+        );
+      }
+      else {
+        posts = posts.filter(post => post.category === category);
+      }
     }
     return (
       <div>
@@ -72,7 +80,7 @@ class ListScreen extends Component {
           List of posts
         </p>
         <CategoryList
-          categories={categories}
+          categories={Object.values(categories)}
           filterCategory={category}
           onChangeCategory={this.filterCategory}
         />

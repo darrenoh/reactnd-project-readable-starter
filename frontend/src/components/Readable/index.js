@@ -14,7 +14,8 @@ const Readable = props => (
     </header>
     <Switch>
       <Route path="/post/:id" component={DetailScreen} />
-      <Route exact path="/:category*" component={ListScreen} />
+      <Route exact path="/:category" component={ListScreen} />
+      <Route exact path="/" component={ListScreen} />
       <Route component={NotFoundScreen} />
     </Switch>
   </div>
