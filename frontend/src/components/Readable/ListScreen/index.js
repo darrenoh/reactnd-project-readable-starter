@@ -9,8 +9,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchCategories } from '../../../actions/category';
-import { fetchCategoryPosts, fetchPosts } from '../../../actions/post';
+import { receiveCategories } from '../../../actions/category';
+import { receiveCategoryPosts, receivePosts } from '../../../actions/post';
 import NotFoundScreen from '../NotFoundScreen';
 import CategoryList from '../CategoryList';
 import PostList from './PostList';
@@ -23,31 +23,31 @@ class ListScreen extends Component {
 
   componentDidMount() {
     const {
-      fetchCategories,
-      fetchCategoryPosts,
-      fetchPosts,
+      receiveCategories,
+      receiveCategoryPosts,
+      receivePosts,
       match: {
         params: {
           category
         }
       }
     } = this.props;
-    fetchCategories();
-    typeof category === 'undefined' ? fetchPosts() : fetchCategoryPosts(category);
+    receiveCategories();
+    typeof category === 'undefined' ? receivePosts() : receiveCategoryPosts(category);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.category !== nextProps.match.params.category) {
       const {
-        fetchCategoryPosts,
-        fetchPosts,
+        receiveCategoryPosts,
+        receivePosts,
         match: {
           params: {
             category
           }
         }
       } = nextProps;
-      typeof category === 'undefined' ? fetchPosts() : fetchCategoryPosts(category);
+      typeof category === 'undefined' ? receivePosts() : receiveCategoryPosts(category);
     }
   }
 
@@ -100,9 +100,9 @@ function mapStateToProps ({categories, posts}) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    fetchCategories: () => dispatch(fetchCategories()),
-    fetchCategoryPosts: category => dispatch(fetchCategoryPosts(category)),
-    fetchPosts: () => dispatch(fetchPosts())
+    receiveCategories: () => dispatch(receiveCategories()),
+    receiveCategoryPosts: category => dispatch(receiveCategoryPosts(category)),
+    receivePosts: () => dispatch(receivePosts())
   };
 }
 

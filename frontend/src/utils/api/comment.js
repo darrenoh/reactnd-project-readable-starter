@@ -22,8 +22,7 @@ export const pushComment = comment => {
     method: 'POST',
     headers,
     body: JSON.stringify(comment)
-  }).then(res => res.json())
-    .then(() => comment);
+  }).then(res => res.json());
 };
 
 export const fetchComment = id => {

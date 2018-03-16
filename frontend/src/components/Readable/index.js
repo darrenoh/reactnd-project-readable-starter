@@ -2,6 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import ListScreen from './ListScreen';
 import DetailScreen from './DetailScreen';
+import EditScreen from './EditScreen';
 import NotFoundScreen from './NotFoundScreen';
 import logo from './logo.svg';
 import './index.css';
@@ -13,6 +14,7 @@ const Readable = props => (
       <h1 className="App-title">Readable</h1>
     </header>
     <Switch>
+      <Route path="/post/:id/edit" component={EditScreen} />
       <Route path="/post/:id" component={DetailScreen} />
       <Route exact path="/:category" component={ListScreen} />
       <Route exact path="/" component={ListScreen} />

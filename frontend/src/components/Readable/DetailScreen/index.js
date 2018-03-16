@@ -11,8 +11,8 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchPost } from '../../../actions/post';
-import { fetchPostComments } from '../../../actions/comment';
+import { receivePost } from '../../../actions/post';
+import { receivePostComments } from '../../../actions/comment';
 import NotFoundScreen from '../NotFoundScreen';
 import PostDetail from './PostDetail';
 import CommentList from './CommentList';
@@ -20,31 +20,31 @@ import CommentList from './CommentList';
 class DetailScreen extends Component {
   componentDidMount() {
     const {
-      fetchPost,
-      fetchPostComments,
+      receivePost,
+      receivePostComments,
       match: {
         params: {
           id
         }
       }
     } = this.props;
-    fetchPost(id);
-    fetchPostComments(id);
+    receivePost(id);
+    receivePostComments(id);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.match.params.id !== nextProps.match.params.id) {
       const {
-        fetchPost,
-        fetchPostComments,
+        receivePost,
+        receivePostComments,
         match: {
           params: {
             id
           }
         }
       } = nextProps;
-      fetchPost(id);
-      fetchPostComments(id);
+      receivePost(id);
+      receivePostComments(id);
     }
   }
 
@@ -86,8 +86,8 @@ function mapStateToProps (state) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    fetchPost: id => dispatch(fetchPost(id)),
-    fetchPostComments: id => dispatch(fetchPostComments(id))
+    receivePost: id => dispatch(receivePost(id)),
+    receivePostComments: id => dispatch(receivePostComments(id))
   };
 }
 
