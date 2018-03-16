@@ -1,6 +1,6 @@
 import {RECEIVE_CATEGORIES} from '../actions/category';
 
-function categories (state = {}, action) {
+function categories (state = null, action) {
   const { categories } = action;
 
   switch (action.type) {

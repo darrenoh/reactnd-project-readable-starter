@@ -9,6 +9,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { receiveCategories } from '../../../actions/category';
 import { receiveCategoryPosts, receivePosts } from '../../../actions/post';
 import NotFoundScreen from '../NotFoundScreen';
@@ -23,6 +24,7 @@ class ListScreen extends Component {
 
   componentDidMount() {
     const {
+      categories,
       receiveCategories,
       receiveCategoryPosts,
       receivePosts,
@@ -32,8 +34,8 @@ class ListScreen extends Component {
         }
       }
     } = this.props;
-    receiveCategories();
-    typeof category === 'undefined' ? receivePosts() : receiveCategoryPosts(category);
+    !categories && receiveCategories();
+    category ? receiveCategoryPosts(category) : receivePosts();
   }
 
   componentWillReceiveProps(nextProps) {
@@ -47,23 +49,23 @@ class ListScreen extends Component {
           }
         }
       } = nextProps;
-      typeof category === 'undefined' ? receivePosts() : receiveCategoryPosts(category);
+      category ? receiveCategoryPosts(category) : receivePosts();
     }
   }
 
   render () {
-    const {
-      categories
-    } = this.props;
     let {
+      categories,
       posts,
       match: {
+        url,
         params: {
           category
         }
       }
     } = this.props;
     let title = 'List of posts';
+    categories = categories || {};
     category = category || '';
     if (category !== '') {
       if (typeof categories[category] === 'undefined') {
@@ -80,6 +82,7 @@ class ListScreen extends Component {
         <p className="App-intro">
           {title}
         </p>
+        <Link to={(url === '/' ? '' : url) + '/add'}>Add</Link>
         <CategoryList
           categories={Object.values(categories)}
           filterCategory={category}
@@ -93,7 +96,7 @@ class ListScreen extends Component {
 
 function mapStateToProps ({categories, posts}) {
   return {
-    categories: categories,
+    categories,
     posts: Object.values(posts)
   };
 }

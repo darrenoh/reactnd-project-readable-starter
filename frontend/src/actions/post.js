@@ -25,7 +25,7 @@ export const receivePosts = () => dispatch => API
 
 export const addPost = post => dispatch =>  API
   .addPost(post)
-  .then(() => dispatch({
+  .then(post => dispatch({
     type: ADD_POST,
     post
   }));
@@ -53,7 +53,7 @@ export const voteDownPost = post => dispatch => API
 
 export const updatePost = post => dispatch => API
   .updatePost(post)
-  .then(() => dispatch({
+  .then(post => dispatch({
     type: UPDATE_POST,
     post
   }));
