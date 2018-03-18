@@ -11,8 +11,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { receivePost } from '../../../actions/post';
+import { receivePost, deletePost } from '../../../actions/post';
 import { receivePostComments } from '../../../actions/comment';
 import NotFoundScreen from '../NotFoundScreen';
 import PostDetail from './PostDetail';
@@ -49,9 +48,24 @@ class DetailScreen extends Component {
     }
   }
 
+  deletePost = () => {
+    const {
+      deletePost,
+      history,
+      match: {
+        params: {
+          id
+        }
+      }
+    } = this.props;
+    deletePost(id);
+    history.push('/');
+  };
+
   render () {
     const {
       posts,
+      history,
       match: {
         url,
         params: {
@@ -72,7 +86,12 @@ class DetailScreen extends Component {
             {posts[id].title}
           </p>
           <PostDetail post={posts[id]} />
-          <Link to={url + '/edit'}>Edit</Link>
+          <button className="post-edit" onClick={() => history.push(url + '/edit')}>
+            Edit
+          </button>
+          <button className="post-edit" onClick={this.deletePost}>
+            Delete
+          </button>
           <CommentList comments={Object.values(comments)} />
         </div>
       );
@@ -90,6 +109,7 @@ function mapStateToProps (state) {
 function mapDispatchToProps (dispatch) {
   return {
     receivePost: id => dispatch(receivePost(id)),
+    deletePost: id => dispatch(deletePost(id)),
     receivePostComments: id => dispatch(receivePostComments(id))
   };
 }

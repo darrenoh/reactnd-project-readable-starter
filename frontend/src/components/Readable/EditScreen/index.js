@@ -38,31 +38,35 @@ class EditScreen extends Component {
   };
 
   updatePost = e => {
-    const {addPost, updatePost} = this.props;
+    const {
+      addPost,
+      updatePost,
+      history
+    } = this.props;
     e.preventDefault();
     if (this.state.id) {
-      updatePost(this.state);
+      updatePost(this.state).then(({post}) => history.push('/post/' + post.id));
     } else {
       addPost({
         ...this.state,
         timestamp: Date.now()
-      })
+      }).then(({post}) => history.push('/post/' + post.id));
     }
   };
 
   render () {
     const {
+      categories,
       posts,
       match: {
         params: {
+          category,
           id
         }
       }
     } = this.props;
     const post = id ? posts[id] : {};
-    let {categories} = this.props;
-    categories = categories || {};
-    if (!id || (post && !post.deleted)) {
+    if ((!category || (categories && categories[category])) && (!id || (post && !post.deleted))) {
       const title = !id ? 'Add post' : post.title;
       return (
         <form className="post-edit" onSubmit={this.updatePost}>
@@ -99,8 +103,8 @@ class EditScreen extends Component {
           {!id && 
             <CategoryList
               name="category"
-              categories={Object.values(categories)}
-              filterCategory=""
+              categories={Object.values(categories || {})}
+              filterCategory={category || ''}
               onChange={this.onchange}
             />
           }

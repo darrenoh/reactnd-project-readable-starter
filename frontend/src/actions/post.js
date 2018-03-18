@@ -58,9 +58,9 @@ export const updatePost = post => dispatch => API
     post
   }));
 
-export const deletePost = post => dispatch => API
-  .deletePost(post.id)
-  .then(() => dispatch({
+export const deletePost = id => dispatch => API
+  .deletePost(id)
+  .then(post => dispatch({
     type: REMOVE_POST,
     post
   }));
