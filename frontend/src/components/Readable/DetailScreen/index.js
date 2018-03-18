@@ -11,6 +11,7 @@
 
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { receivePost } from '../../../actions/post';
 import { receivePostComments } from '../../../actions/comment';
 import NotFoundScreen from '../NotFoundScreen';
@@ -52,6 +53,7 @@ class DetailScreen extends Component {
     const {
       posts,
       match: {
+        url,
         params: {
           id
         }
@@ -70,6 +72,7 @@ class DetailScreen extends Component {
             {posts[id].title}
           </p>
           <PostDetail post={posts[id]} />
+          <Link to={url + '/edit'}>Edit</Link>
           <CommentList comments={Object.values(comments)} />
         </div>
       );
