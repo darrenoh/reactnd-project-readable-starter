@@ -6,7 +6,12 @@ import CategoryList from '../CategoryList';
 import NotFoundScreen from '../NotFoundScreen';
 
 class EditScreen extends Component {
-  state = {};
+  state = {
+    title: '',
+    body: '',
+    author: '',
+    category: ''
+  };
 
   componentDidMount() {
     const {
@@ -23,10 +28,12 @@ class EditScreen extends Component {
       receivePost,
       match: {
         params: {
+          category,
           id
         }
       }
     } = nextProps;
+    category && this.setState({category});
     if (id) {
       posts[id] ? this.setState(posts[id]) : receivePost(id)
         .then(({post}) => this.setState(post));
@@ -47,17 +54,13 @@ class EditScreen extends Component {
     if (this.state.id) {
       updatePost(this.state).then(({post}) => history.push('/post/' + post.id));
     } else {
-      addPost({
-        ...this.state,
-        timestamp: Date.now()
-      }).then(({post}) => history.push('/post/' + post.id));
+      addPost(this.state).then(({post}) => history.push('/post/' + post.id));
     }
   };
 
   render () {
     const {
       categories,
-      posts,
       match: {
         params: {
           category,
@@ -65,8 +68,7 @@ class EditScreen extends Component {
         }
       }
     } = this.props;
-    const post = id ? posts[id] : {};
-    if ((!category || (categories && categories[category])) && (!id || (post && !post.deleted))) {
+    if ((!category || (categories && categories[category])) && (!id || (this.state.id && !this.state.deleted))) {
       const title = !id ? 'Add post' : 'Edit post';
       return (
         <form className="post-edit" onSubmit={this.updatePost}>
@@ -78,7 +80,7 @@ class EditScreen extends Component {
               type="text"
               name="title"
               placeholder="Title"
-              defaultValue={post.title}
+              value={this.state.title}
               onChange={this.onchange}
             />
           </div>
@@ -86,7 +88,7 @@ class EditScreen extends Component {
             <textarea
               name="body"
               placeholder="Body"
-              defaultValue={post.body}
+              value={this.state.body}
               onChange={this.onchange}
             />
           </div>
@@ -96,6 +98,7 @@ class EditScreen extends Component {
                 type="text"
                 name="author"
                 placeholder="Author"
+                value={this.state.author}
                 onChange={this.onchange}
               />
             </div>
@@ -104,7 +107,7 @@ class EditScreen extends Component {
             <CategoryList
               name="category"
               categories={Object.values(categories || {})}
-              filterCategory={category || ''}
+              value={this.state.category}
               onChange={this.onchange}
             />
           }

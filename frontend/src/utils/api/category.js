@@ -9,9 +9,8 @@ export const fetchCategories = () => {
     .then(res => res.json())
     .then((json) => {
       let categories = {};
-      json.categories.map(category => {
+      json.categories.forEach(category => {
         categories[category.path] = category;
-        return category;
       });
       return categories;
     });

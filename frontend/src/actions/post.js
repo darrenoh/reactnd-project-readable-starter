@@ -37,16 +37,16 @@ export const receivePost = id => dispatch => API
     post
   }));
 
-export const voteUpPost = post => dispatch => API
-  .voteUpPost(post.id)
-  .then(() => dispatch({
+export const voteUpPost = id => dispatch => API
+  .voteUpPost(id)
+  .then(post => dispatch({
     type: UPVOTE_POST,
     post
   }));
 
-export const voteDownPost = post => dispatch => API
-  .voteDownPost(post.id)
-  .then(() => dispatch({
+export const voteDownPost = id => dispatch => API
+  .voteDownPost(id)
+  .then(post => dispatch({
     type: DOWNVOTE_POST,
     post
   }));

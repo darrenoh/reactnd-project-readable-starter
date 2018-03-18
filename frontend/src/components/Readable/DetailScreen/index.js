@@ -9,10 +9,9 @@
  * - CommentList
  */
 
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { receivePost, deletePost } from '../../../actions/post';
-import { receivePostComments } from '../../../actions/comment';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {receivePost, deletePost} from '../../../actions/post';
 import NotFoundScreen from '../NotFoundScreen';
 import PostDetail from './PostDetail';
 import CommentList from './CommentList';
@@ -21,7 +20,6 @@ class DetailScreen extends Component {
   componentDidMount() {
     const {
       receivePost,
-      receivePostComments,
       match: {
         params: {
           id
@@ -29,7 +27,6 @@ class DetailScreen extends Component {
       }
     } = this.props;
     receivePost(id);
-    receivePostComments(id);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,7 +70,6 @@ class DetailScreen extends Component {
         }
       }
     } = this.props;
-    const comments = this.props.comments[id] || {};
     if (typeof posts[id] === 'undefined' || posts[id].deleted) {
       return (
         <NotFoundScreen />
@@ -92,7 +88,7 @@ class DetailScreen extends Component {
           <button className="post-edit" onClick={this.deletePost}>
             Delete
           </button>
-          <CommentList comments={Object.values(comments)} />
+          <CommentList parentId={id} />
         </div>
       );
     }
@@ -100,17 +96,13 @@ class DetailScreen extends Component {
 }
 
 function mapStateToProps (state) {
-  return {
-    posts: state.posts,
-    comments: state.comments
-  };
+  return {posts: state.posts};
 }
 
 function mapDispatchToProps (dispatch) {
   return {
     receivePost: id => dispatch(receivePost(id)),
-    deletePost: id => dispatch(deletePost(id)),
-    receivePostComments: id => dispatch(receivePostComments(id))
+    deletePost: id => dispatch(deletePost(id))
   };
 }
 

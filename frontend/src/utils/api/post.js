@@ -9,9 +9,8 @@ export const fetchCategoryPosts = category => fetch(API + '/' + category + '/pos
   .then(res => res.json())
   .then(json => {
     let posts = {};
-    json.map(post => {
+    json.forEach(post => {
       posts[post.id] = post;
-      return post;
     });
     return posts;
   });
@@ -20,9 +19,8 @@ export const fetchPosts = () => fetch(API + '/posts', {headers})
   .then(res => res.json())
   .then(json => {
     let posts = {};
-    json.map(post => {
+    json.forEach(post => {
       posts[post.id] = post;
-      return post;
     });
     return posts;
   });
@@ -35,15 +33,14 @@ export const addPost = post => fetch(API + '/posts', {
   },
   body: JSON.stringify({
     ...post,
-    id: uuid()
+    id: uuid(),
+    timestamp: Date.now()
   })
 })
-  .then(res => res.json())
-  .then(json => json);
+  .then(res => res.json());
 
 export const fetchPost = id => fetch(API + '/posts/' + id, {headers})
-  .then(res => res.json())
-  .then(json => json);
+  .then(res => res.json());
 
 export const voteUpPost = id => fetch(API + '/posts/' + id, {
   method: 'POST',
@@ -65,10 +62,12 @@ export const updatePost = post => fetch(API + '/posts/' + post.id, {
     ...headers,
     'Content-Type': 'application/json'
   },
-  body: JSON.stringify(post)
+  body: JSON.stringify({
+    ...post,
+    timestamp: Date.now()
+  })
 })
-  .then(res => res.json())
-  .then(json => json);
+  .then(res => res.json());
 
 export const deletePost = id => fetch(API + '/posts/' + id, {
   method: 'DELETE',

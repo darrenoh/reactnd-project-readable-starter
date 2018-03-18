@@ -17,8 +17,8 @@ export const receivePostComments = parentId => dispatch => API
   }));
 
 export const addComment = comment => dispatch => API
-  .pushComment(comment)
-  .then(() => dispatch({
+  .addComment(comment)
+  .then(comment => dispatch({
     type: ADD_COMMENT,
     comment
   }));
@@ -30,30 +30,30 @@ export const receiveComment = id => dispatch => API
     comment
   }));
 
-export const voteUpComment = comment => dispatch => API
-  .voteUpComment(comment.id)
-  .then(() => dispatch({
+export const voteUpComment = id => dispatch => API
+  .voteUpComment(id)
+  .then(comment => dispatch({
     type: UPVOTE_COMMENT,
     comment
   }));
 
-export const voteDownComment = comment => dispatch => API
-  .voteDownComment(comment.id)
-  .then(() => dispatch({
+export const voteDownComment = id => dispatch => API
+  .voteDownComment(id)
+  .then(comment => dispatch({
     type: DOWNVOTE_COMMENT,
     comment
   }));
 
 export const updateComment = comment => dispatch => API
   .updateComment(comment)
-  .then(() => dispatch({
+  .then(comment => dispatch({
     type: UPDATE_COMMENT,
     comment
   }));
 
-export const deleteComment = comment => dispatch => API
-  .deleteComment(comment.id)
-  .then(() => dispatch({
+export const deleteComment = id => dispatch => API
+  .deleteComment(id)
+  .then(comment => dispatch({
     type: REMOVE_COMMENT,
     comment
   }));

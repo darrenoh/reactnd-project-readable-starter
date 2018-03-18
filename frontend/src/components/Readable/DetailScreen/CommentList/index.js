@@ -8,15 +8,68 @@
  * - Form
  */
 
-import React from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import Modal from 'react-modal';
+import {receivePostComments} from '../../../../actions/comment';
 import Comment from './Comment';
+import Form from './Form';
 
-const CommentList = ({comments}) => (
-  <ul className="comment-list">
-    {comments.filter(comment => !comment.deleted).map(comment => (
-      <Comment key={comment.id} comment={comment} />
-    ))}
-  </ul>
-);
+class CommentList extends Component{
+  state = {addModalOpen: false};
 
-export default CommentList;
+  componentDidMount() {
+    const {parentId, receivePostComments} = this.props;
+    receivePostComments(parentId);
+  }
+
+  componentWillMount() {
+    Modal.setAppElement('body');
+  }
+
+  openAddModal = () => {
+    this.setState(() => ({addModalOpen: true}));
+  };
+
+  closeAddModal = () => {
+    this.setState(() => ({addModalOpen: false}));
+  };
+
+  render () {
+    const {addModalOpen} = this.state;
+    const {parentId, comments} = this.props;
+    return (
+      <div>
+        <button className="comment-add-button" onClick={this.openAddModal}>
+          Add
+        </button>
+        <Modal
+          className="modal"
+          overlayClassName="overlay"
+          isOpen={addModalOpen}
+          onRequestClose={this.closeAddModal}
+          contentLabel="Modal"
+        >
+          {addModalOpen && <Form comment={{parentId}} closeForm={this.closeAddModal} />}
+        </Modal>
+        {comments[parentId] &&
+          <ul className="comment-list">
+            {Object.values(comments[parentId]).filter(comment => !comment.deleted).map(comment => (
+              <Comment key={comment.id} comment={comment} />
+            ))}
+          </ul>
+        }
+      </div>
+    );
+  }
+}
+
+function mapStateToProps (state) {
+  return {comments: state.comments};
+}
+
+function mapDispatchToProps (dispatch) {
+  return {receivePostComments: id => dispatch(receivePostComments(id))};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommentList);

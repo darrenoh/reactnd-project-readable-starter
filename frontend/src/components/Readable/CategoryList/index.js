@@ -23,7 +23,7 @@ const CategoryList = props => {
     <select
       name={props.name}
       className="category-list"
-      defaultValue={props.filterCategory}
+      value={props.value}
       onChange={props.onChange}
     >
       <option value="" disabled>Category</option>
