@@ -67,7 +67,7 @@ class EditScreen extends Component {
     } = this.props;
     const post = id ? posts[id] : {};
     if ((!category || (categories && categories[category])) && (!id || (post && !post.deleted))) {
-      const title = !id ? 'Add post' : post.title;
+      const title = !id ? 'Add post' : 'Edit post';
       return (
         <form className="post-edit" onSubmit={this.updatePost}>
           <p className="App-intro">
