@@ -26,6 +26,7 @@ class PostDetail extends Component {
         <div className="post-meta">
           <div className="post-author">{post.author}</div>
           <div className="post-timestamp">{timestamp.toLocaleString()}</div>
+          <div className="post-comment-count">{post.commentCount}</div>
         </div>
         <div className="post-controls">
           <button className="post-edit" onClick={() => history.push(url + '/edit')}>

@@ -1,13 +1,3 @@
-/**
- * @file
- * Comment list component for post detail view.
- *
- * Components:
- * - Comment
- * - Add
- * - Form
- */
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import Modal from 'react-modal';
