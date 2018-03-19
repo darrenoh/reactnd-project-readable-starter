@@ -15,16 +15,16 @@
 
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {deleteComment} from '../../../../../actions/comment';
+import {
+  voteUpComment,
+  voteDownComment,
+  deleteComment
+} from '../../../../../actions/comment';
 import Modal from 'react-modal';
 import Form from '../Form';
 
 class Comment extends Component {
   state = {editModalOpen: false};
-
-  componentWillMount() {
-    Modal.setAppElement('body');
-  }
 
   openEditModal = () => {
     this.setState(() => ({editModalOpen: true}));
@@ -32,6 +32,16 @@ class Comment extends Component {
 
   closeEditModal = () => {
     this.setState(() => ({editModalOpen: false}));
+  };
+
+  voteUpComment = () => {
+    const {comment, voteUpComment} = this.props;
+    voteUpComment(comment.id);
+  };
+
+  voteDownComment = () => {
+    const {comment, voteDownComment} = this.props;
+    voteDownComment(comment.id);
   };
 
   deleteComment = () => {
@@ -49,14 +59,24 @@ class Comment extends Component {
         <div className="comment-meta">
           <div className="comment-author">{comment.author}</div>
           <div className="comment-timestamp">{timestamp.toLocaleString()}</div>
-          <div className="post-votescore">{comment.voteScore}</div>
         </div>
-        <button className="comment-edit-button" onClick={this.openEditModal}>
-          Edit
-        </button>
-        <button className="comment-delete-button" onClick={this.deleteComment}>
-          Delete
-        </button>
+        <div className="comment-controls">
+          <button className="comment-edit" onClick={this.openEditModal}>
+            Edit
+          </button>
+          <button className="comment-delete" onClick={this.deleteComment}>
+            Delete
+          </button>
+        </div>
+        <div className="comment-score">
+          <span className="comment-votescore">{comment.voteScore}</span>
+          <button className="comment-vote-up" onClick={this.voteUpComment}>
+            Vote up
+          </button>
+          <button className="comment-vote-down" onClick={this.voteDownComment}>
+            Vote down
+          </button>
+        </div>
         <Modal
           className="modal"
           overlayClassName="overlay"
@@ -76,7 +96,11 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return {deleteComment: id => dispatch(deleteComment(id))};
+  return {
+    voteUpComment: id => dispatch(voteUpComment(id)),
+    voteDownComment: id => dispatch(voteDownComment(id)),
+    deleteComment: id => dispatch(deleteComment(id))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Comment);

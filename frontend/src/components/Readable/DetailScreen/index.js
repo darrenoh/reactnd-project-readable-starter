@@ -11,7 +11,7 @@
 
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {receivePost, deletePost} from '../../../actions/post';
+import {receivePost} from '../../../actions/post';
 import NotFoundScreen from '../NotFoundScreen';
 import PostDetail from './PostDetail';
 import CommentList from './CommentList';
@@ -30,34 +30,18 @@ class DetailScreen extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.match.params.id !== nextProps.match.params.id) {
-      const {
-        receivePost,
-        receivePostComments,
-        match: {
-          params: {
-            id
-          }
-        }
-      } = nextProps;
-      receivePost(id);
-      receivePostComments(id);
-    }
-  }
-
-  deletePost = () => {
     const {
-      deletePost,
-      history,
+      receivePost,
       match: {
         params: {
           id
         }
       }
-    } = this.props;
-    deletePost(id);
-    history.push('/');
-  };
+    } = nextProps;
+    if (id !== this.props.match.params.id) {
+      receivePost(id);
+    }
+  }
 
   render () {
     const {
@@ -70,7 +54,7 @@ class DetailScreen extends Component {
         }
       }
     } = this.props;
-    if (typeof posts[id] === 'undefined' || posts[id].deleted) {
+    if (!posts[id] || posts[id].deleted) {
       return (
         <NotFoundScreen />
       );
@@ -81,13 +65,7 @@ class DetailScreen extends Component {
           <p className="App-intro">
             {posts[id].title}
           </p>
-          <PostDetail post={posts[id]} />
-          <button className="post-edit" onClick={() => history.push(url + '/edit')}>
-            Edit
-          </button>
-          <button className="post-edit" onClick={this.deletePost}>
-            Delete
-          </button>
+          <PostDetail post={posts[id]} url={url} history={history} />
           <CommentList parentId={id} />
         </div>
       );
@@ -100,10 +78,7 @@ function mapStateToProps (state) {
 }
 
 function mapDispatchToProps (dispatch) {
-  return {
-    receivePost: id => dispatch(receivePost(id)),
-    deletePost: id => dispatch(deletePost(id))
-  };
+  return {receivePost: id => dispatch(receivePost(id))};
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailScreen);

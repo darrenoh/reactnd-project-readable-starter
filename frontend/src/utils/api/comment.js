@@ -35,15 +35,21 @@ export const fetchComment = id => fetch(API + '/comments/' + id, {headers})
 
 export const voteUpComment = id => fetch(API + '/comments/' + id, {
   method: 'POST',
-  headers,
-  body: 'upVote'
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({option: 'upVote'})
 })
   .then(res => res.json());
 
 export const voteDownComment = id => fetch(API + '/comments/' + id, {
   method: 'POST',
-  headers,
-  body: 'downVote'
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({option: 'downVote'})
 })
   .then(res => res.json());
 

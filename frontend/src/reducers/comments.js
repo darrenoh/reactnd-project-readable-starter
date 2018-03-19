@@ -20,44 +20,14 @@ function comments (state = {}, action) {
     case RECEIVE_COMMENT:
     case ADD_COMMENT:
     case UPDATE_COMMENT:
-      return {
-        ...state,
-        [comment.parentId]: {
-          ...state[comment.parentId],
-          [comment.id]: comment
-        }
-      };
     case REMOVE_COMMENT:
-      return {
-        ...state,
-        [comment.parentId]: {
-          ...state[comment.parentId],
-          [comment.id]: {
-            ...state[comment.parentId][comment.id],
-            deleted: true
-          }
-        }
-      };
     case UPVOTE_COMMENT:
-      return {
-        ...state,
-        [comment.parentId]: {
-          ...state[comment.parentId],
-          [comment.id]: {
-            ...state[comment.parentId][comment.id],
-            voteScore: ++state[comment.parentId][comment.id].voteScore
-          }
-        }
-      };
     case DOWNVOTE_COMMENT:
       return {
         ...state,
         [comment.parentId]: {
           ...state[comment.parentId],
-          [comment.id]: {
-            ...state[comment.parentId][comment.id],
-            voteScore: --state[comment.parentId][comment.id].voteScore
-          }
+          [comment.id]: comment
         }
       };
     default:

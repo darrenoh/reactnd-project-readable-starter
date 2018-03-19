@@ -23,10 +23,6 @@ class CommentList extends Component{
     receivePostComments(parentId);
   }
 
-  componentWillMount() {
-    Modal.setAppElement('body');
-  }
-
   openAddModal = () => {
     this.setState(() => ({addModalOpen: true}));
   };
@@ -41,7 +37,7 @@ class CommentList extends Component{
     return (
       <div>
         <button className="comment-add-button" onClick={this.openAddModal}>
-          Add
+          Add comment
         </button>
         <Modal
           className="modal"

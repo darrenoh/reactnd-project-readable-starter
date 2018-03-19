@@ -22,33 +22,12 @@ function posts (state = {}, action) {
     case RECEIVE_POST:
     case ADD_POST:
     case UPDATE_POST:
-      return {
-        ...state,
-        [post.id]: post
-      };
     case REMOVE_POST:
-      return {
-        ...state,
-        [post.id]: {
-          ...state[post.id],
-          deleted: true
-        }
-      };
     case UPVOTE_POST:
-      return {
-        ...state,
-        [post.id]: {
-          ...state.posts[post.id],
-          voteScore: ++state.posts[post.id].voteScore
-        }
-      };
     case DOWNVOTE_POST:
       return {
         ...state,
-        [post.id]: {
-          ...state.posts[post.id],
-          voteScore: --state.posts[post.id].voteScore
-        }
+        [post.id]: post
       };
     default:
       return state;

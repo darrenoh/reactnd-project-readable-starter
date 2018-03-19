@@ -17,28 +17,48 @@ class EditScreen extends Component {
     const {
       categories,
       receiveCategories,
-    } = this.props;
-    !categories && receiveCategories();
-    this.componentWillReceiveProps(this.props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const {
-      posts,
-      receivePost,
       match: {
         params: {
           category,
           id
         }
       }
-    } = nextProps;
+    } = this.props;
+    !categories && receiveCategories();
     category && this.setState({category});
+    this.loadPost(id);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const {
+      match: {
+        params: {
+          id
+        }
+      }
+    } = nextProps;
+    if (id !== this.props.match.params.id) {
+      this.loadPost(id);
+    }
+  }
+
+  loadPost = id => {
+    const {posts, receivePost} = this.props;
     if (id) {
       posts[id] ? this.setState(posts[id]) : receivePost(id)
         .then(({post}) => this.setState(post));
     }
-  }
+    else {
+      this.setState({
+        id: null,
+        title: '',
+        body: '',
+        author: '',
+        category: '',
+        deleted: null
+      });
+    }
+  };
 
   onchange = ({target: {name, value}}) => {
     this.setState({[name]: value});

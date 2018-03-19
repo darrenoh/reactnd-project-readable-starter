@@ -44,15 +44,21 @@ export const fetchPost = id => fetch(API + '/posts/' + id, {headers})
 
 export const voteUpPost = id => fetch(API + '/posts/' + id, {
   method: 'POST',
-  headers,
-  body: 'upVote'
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({option: 'upVote'})
 })
   .then(res => res.json());
 
 export const voteDownPost = id => fetch(API + '/posts/' + id, {
   method: 'POST',
-  headers,
-  body: 'downVote'
+  headers: {
+    ...headers,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({option: 'downVote'})
 })
   .then(res => res.json());
 
