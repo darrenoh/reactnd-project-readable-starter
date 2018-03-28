@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import ListScreen from './ListScreen';
 import DetailScreen from './DetailScreen';
 import EditScreen from './EditScreen';
@@ -19,6 +19,8 @@ const Readable = () => (
       <Route path="/post/:id" component={DetailScreen} />
       <Route exact path="/:category" component={ListScreen} />
       <Route exact path="/:category/add" component={EditScreen} />
+      <Route exact path="/:category/:id/edit" component={EditScreen} />
+      <Route path="/:category/:id" component={DetailScreen} />
       <Route exact path="/" component={ListScreen} />
       <Route component={NotFoundScreen} />
     </Switch>

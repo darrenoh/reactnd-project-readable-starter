@@ -1,17 +1,8 @@
-/**
- * @file
- * Post detail view.
- *
- * Components
- * - Post
- * - Edit
- * - Delete
- * - CommentList
- */
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import {receiveCategories} from '../../../actions/category';
 import {receivePost} from '../../../actions/post';
+import Navigation from '../Navigation';
 import NotFoundScreen from '../NotFoundScreen';
 import PostDetail from './PostDetail';
 import CommentList from './CommentList';
@@ -19,6 +10,8 @@ import CommentList from './CommentList';
 class DetailScreen extends Component {
   componentDidMount() {
     const {
+      categories,
+      receiveCategories,
       receivePost,
       match: {
         params: {
@@ -26,6 +19,7 @@ class DetailScreen extends Component {
         }
       }
     } = this.props;
+    !categories && receiveCategories();
     receivePost(id);
   }
 
@@ -44,6 +38,7 @@ class DetailScreen extends Component {
   }
 
   render () {
+    const categories = this.props.categories || {};
     const {
       posts,
       history,
@@ -56,12 +51,12 @@ class DetailScreen extends Component {
     } = this.props;
     if (!posts[id] || posts[id].deleted) {
       return (
-        <NotFoundScreen />
+        <NotFoundScreen history={history} />
       );
-    }
-    else {
+    } else {
       return (
         <div>
+          <Navigation categories={categories} history={history} />
           <p className="App-intro">
             {posts[id].title}
           </p>
@@ -73,12 +68,15 @@ class DetailScreen extends Component {
   }
 }
 
-function mapStateToProps (state) {
-  return {posts: state.posts};
+function mapStateToProps ({categories, posts}) {
+  return {categories, posts};
 }
 
 function mapDispatchToProps (dispatch) {
-  return {receivePost: id => dispatch(receivePost(id))};
+  return {
+    receiveCategories: () => dispatch(receiveCategories()),
+    receivePost: id => dispatch(receivePost(id))
+  };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DetailScreen);

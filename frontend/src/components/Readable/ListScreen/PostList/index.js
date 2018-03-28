@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Link} from 'react-router-dom';
+import ListItem from './ListItem';
 
 class PostList extends Component {
   state = {sort: 'date'};
@@ -14,6 +14,7 @@ class PostList extends Component {
   };
 
   render () {
+    const {history} = this.props;
     let posts = this.props.posts.filter(post => !post.deleted);
     posts.sort(this.compare(this.state.sort));
     return (
@@ -25,9 +26,7 @@ class PostList extends Component {
         </select>
         <ul className="post-list">
           {posts.map(post => (
-            <li className="post-list-item" key={post.id}>
-              <Link to={'/post/' + post.id}>{post.title}</Link>
-            </li>
+            <ListItem history={history} post={post} key={post.id} />
           ))}
         </ul>
       </div>

@@ -1,18 +1,3 @@
-/**
- * @file
- * Comment component for the comment list component.
- *
- * Details
- * - Date and time
- * - Author
- * - Body
- *
- * Components
- * - Edit
- * - Delete
- * - Score
- */
-
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {

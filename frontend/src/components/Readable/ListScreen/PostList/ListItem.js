@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {voteUpPost, voteDownPost, deletePost} from '../../../actions/post';
+import {Link} from 'react-router-dom';
+import {voteUpPost, voteDownPost, deletePost} from '../../../../actions/post';
 
-class PostDetail extends Component {
+class ListItem extends Component {
   voteUpPost = () => {
     this.props.voteUpPost(this.props.post.id);
   };
@@ -18,18 +19,19 @@ class PostDetail extends Component {
   };
 
   render () {
-    const {post, url, history} = this.props;
+    const {history, post} = this.props;
+    const category = post.category || 'post';
     const timestamp = new Date(post.timestamp);
     return (
-      <div className="post-detail">
-        <div className="post-body">{post.body}</div>
+      <li className="post-list-item">
+        <Link className="post-title" to={'/' + category + '/' + post.id}>{post.title}</Link>
         <div className="post-meta">
           <div className="post-author">{post.author}</div>
           <div className="post-timestamp">{timestamp.toLocaleString()}</div>
           <div className="post-comment-count">{post.commentCount}</div>
         </div>
         <div className="post-controls">
-          <button className="post-edit" onClick={() => history.push(url + '/edit')}>
+          <button className="post-edit" onClick={() => history.push('/' + category + '/' + post.id + '/edit')}>
             Edit
           </button>
           <button className="post-delete" onClick={this.deletePost}>
@@ -45,7 +47,7 @@ class PostDetail extends Component {
             Vote down
           </button>
         </div>
-      </div>
+      </li>
     );
   }
 }
@@ -58,4 +60,4 @@ function mapDispatchToProps (dispatch) {
   };
 }
 
-export default connect(null, mapDispatchToProps)(PostDetail);
+export default connect(null, mapDispatchToProps)(ListItem);

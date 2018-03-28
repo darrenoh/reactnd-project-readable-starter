@@ -1,8 +1,7 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { receiveCategories } from '../../../actions/category';
-import { addPost, receivePost, updatePost } from '../../../actions/post';
-import CategoryList from '../CategoryList';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {receiveCategories} from '../../../actions/category';
+import {addPost, receivePost, updatePost} from '../../../actions/post';
 import NotFoundScreen from '../NotFoundScreen';
 
 class EditScreen extends Component {
@@ -24,8 +23,9 @@ class EditScreen extends Component {
         }
       }
     } = this.props;
-    !categories && receiveCategories();
-    category && this.setState({category});
+    !categories && receiveCategories().then(() => {
+      category && this.setState({category});
+    });
     this.loadPost(id);
   }
 
@@ -47,8 +47,7 @@ class EditScreen extends Component {
     if (id) {
       posts[id] ? this.setState(posts[id]) : receivePost(id)
         .then(({post}) => this.setState(post));
-    }
-    else {
+    } else {
       this.setState({
         id: null,
         title: '',
@@ -70,17 +69,19 @@ class EditScreen extends Component {
       updatePost,
       history
     } = this.props;
+    const category = this.state.category || 'post';
     e.preventDefault();
     if (this.state.id) {
-      updatePost(this.state).then(({post}) => history.push('/post/' + post.id));
+      updatePost(this.state).then(({post}) => history.push('/' + category + '/' + post.id));
     } else {
-      addPost(this.state).then(({post}) => history.push('/post/' + post.id));
+      addPost(this.state).then(({post}) => history.push('/' + category + '/' + post.id));
     }
   };
 
   render () {
     const {
       categories,
+      history,
       match: {
         params: {
           category,
@@ -124,12 +125,19 @@ class EditScreen extends Component {
             </div>
           }
           {!id && 
-            <CategoryList
+            <select
               name="category"
-              categories={Object.values(categories || {})}
+              className="category-list"
               value={this.state.category}
               onChange={this.onchange}
-            />
+            >
+              <option value="" disabled>Category</option>
+              {Object.values(categories || {}).map(category => (
+                <option key={category.path} value={category.path}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           }
           <button className="post-submit">
             Submit
@@ -138,7 +146,7 @@ class EditScreen extends Component {
       );
     } else {
       return (
-        <NotFoundScreen />
+        <NotFoundScreen history={history} />
       );
     }
   }

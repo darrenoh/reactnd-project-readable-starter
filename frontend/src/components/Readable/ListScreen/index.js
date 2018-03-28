@@ -1,27 +1,13 @@
-/**
- * @file
- * Filtered or unfiltered list of posts.
- * - Category filter
- * - Sort control
- * - Add post control
- * - List of posts
- */
-
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { receiveCategories } from '../../../actions/category';
-import { receiveCategoryPosts, receivePosts } from '../../../actions/post';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link} from 'react-router-dom';
+import {receiveCategories} from '../../../actions/category';
+import {receiveCategoryPosts, receivePosts} from '../../../actions/post';
+import Navigation from '../Navigation';
 import NotFoundScreen from '../NotFoundScreen';
-import CategoryList from '../CategoryList';
 import PostList from './PostList';
 
 class ListScreen extends Component {
-  filterCategory = category => {
-    const {history} = this.props;
-    history.push('/' + category);
-  }
-
   componentDidMount() {
     const {
       categories,
@@ -54,6 +40,7 @@ class ListScreen extends Component {
   }
 
   render () {
+    const {history} = this.props;
     let {
       categories,
       posts,
@@ -70,7 +57,7 @@ class ListScreen extends Component {
     if (category !== '') {
       if (typeof categories[category] === 'undefined') {
         return (
-          <NotFoundScreen />
+          <NotFoundScreen history={history} />
         );
       } else {
         title = categories[category].name;
@@ -79,16 +66,12 @@ class ListScreen extends Component {
     }
     return (
       <div>
+        <Navigation categories={categories} history={history} />
         <p className="App-intro">
           {title}
         </p>
         <Link to={(url === '/' ? '' : url) + '/add'}>Add</Link>
-        <CategoryList
-          categories={Object.values(categories)}
-          filterCategory={category}
-          onChangeCategory={this.filterCategory}
-        />
-        <PostList posts={posts} />
+        <PostList history={history} posts={posts} />
       </div>
     );
   }
