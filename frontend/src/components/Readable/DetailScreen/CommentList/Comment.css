@@ -1,0 +1,30 @@
+.comment-list-item,
+.comment-meta,
+.comment-score,
+.comment-controls {
+  float: left;
+}
+
+.comment-body {
+  margin: 1em;
+}
+
+.comment-meta div,
+.comment-score button,
+.comment-score span,
+.comment-controls button {
+  float: left;
+  margin: 1em;
+}
+
+.comment-author:before {
+  content: 'Author: ';
+}
+
+.comment-timestamp:before {
+  content: 'Date: ';
+}
+
+.comment-votescore:before {
+  content: 'Comment score: ';
+}

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {receiveCategories} from '../../../actions/category';
-import Navigation from '../Navigation';
+import {receiveCategories} from '../../actions/category';
+import Navigation from './Navigation';
 
 class NotFoundScreen extends Component {
   componentDidMount() {
@@ -13,11 +13,13 @@ class NotFoundScreen extends Component {
     const {history} = this.props;
     const categories = this.props.categories || {};
     return (
-      <div>
+      <div className="readable-body">
         <Navigation categories={categories} history={history} />
-        <p className="App-intro">
-          Page not found.
-        </p>
+        <main>
+          <p className="App-intro">
+            Page not found.
+          </p>
+        </main>
       </div>
     );
   }

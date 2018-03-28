@@ -26,3 +26,11 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.readable-body {
+  padding: 1em;
+}
+
+.readable-navigation {
+  text-align: left;
+}

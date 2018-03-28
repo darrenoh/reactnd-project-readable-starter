@@ -1,8 +1,21 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Modal from 'react-modal';
 import {voteUpPost, voteDownPost, deletePost} from '../../../actions/post';
+import Form from './Form';
+import './PostDetail.css';
 
 class PostDetail extends Component {
+  state = {addModalOpen: false};
+
+  openAddModal = () => {
+    this.setState(() => ({addModalOpen: true}));
+  };
+
+  closeAddModal = () => {
+    this.setState(() => ({addModalOpen: false}));
+  };
+
   voteUpPost = () => {
     this.props.voteUpPost(this.props.post.id);
   };
@@ -18,6 +31,7 @@ class PostDetail extends Component {
   };
 
   render () {
+    const {addModalOpen} = this.state;
     const {post, url, history} = this.props;
     const timestamp = new Date(post.timestamp);
     return (
@@ -27,14 +41,18 @@ class PostDetail extends Component {
           <div className="post-author">{post.author}</div>
           <div className="post-timestamp">{timestamp.toLocaleString()}</div>
           <div className="post-comment-count">{post.commentCount}</div>
-        </div>
-        <div className="post-controls">
-          <button className="post-edit" onClick={() => history.push(url + '/edit')}>
-            Edit
+          <button className="comment-add-button" onClick={this.openAddModal}>
+            Add comment
           </button>
-          <button className="post-delete" onClick={this.deletePost}>
-            Delete
-          </button>
+          <Modal
+            className="modal"
+            overlayClassName="overlay"
+            isOpen={addModalOpen}
+            onRequestClose={this.closeAddModal}
+            contentLabel="Modal"
+          >
+            {addModalOpen && <Form comment={{parentId: post.id}} closeForm={this.closeAddModal} />}
+          </Modal>
         </div>
         <div className="post-score">
           <span className="post-votescore">{post.voteScore}</span>
@@ -43,6 +61,14 @@ class PostDetail extends Component {
           </button>
           <button className="post-vote-down" onClick={this.voteDownPost}>
             Vote down
+          </button>
+        </div>
+        <div className="post-controls">
+          <button className="post-edit" onClick={() => history.push(url + '/edit')}>
+            Edit
+          </button>
+          <button className="post-delete" onClick={this.deletePost}>
+            Delete
           </button>
         </div>
       </div>

@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
+import Modal from 'react-modal';
 import {
   voteUpComment,
   voteDownComment,
   deleteComment
-} from '../../../../../actions/comment';
-import Modal from 'react-modal';
+} from '../../../../actions/comment';
 import Form from '../Form';
-import '../index.css';
+import './Comment.css';
 
 class Comment extends Component {
   state = {editModalOpen: false};
@@ -46,14 +46,6 @@ class Comment extends Component {
           <div className="comment-author">{comment.author}</div>
           <div className="comment-timestamp">{timestamp.toLocaleString()}</div>
         </div>
-        <div className="comment-controls">
-          <button className="comment-edit" onClick={this.openEditModal}>
-            Edit
-          </button>
-          <button className="comment-delete" onClick={this.deleteComment}>
-            Delete
-          </button>
-        </div>
         <div className="comment-score">
           <span className="comment-votescore">{comment.voteScore}</span>
           <button className="comment-vote-up" onClick={this.voteUpComment}>
@@ -63,15 +55,23 @@ class Comment extends Component {
             Vote down
           </button>
         </div>
-        <Modal
-          className="modal"
-          overlayClassName="overlay"
-          isOpen={editModalOpen}
-          onRequestClose={this.closeEditModal}
-          contentLabel="Modal"
-        >
-          {editModalOpen && <Form comment={comment} closeForm={this.closeEditModal} />}
-        </Modal>
+        <div className="comment-controls">
+          <button className="comment-edit" onClick={this.openEditModal}>
+            Edit
+          </button>
+          <Modal
+            className="modal"
+            overlayClassName="overlay"
+            isOpen={editModalOpen}
+            onRequestClose={this.closeEditModal}
+            contentLabel="Modal"
+          >
+            {editModalOpen && <Form comment={comment} closeForm={this.closeEditModal} />}
+          </Modal>
+          <button className="comment-delete" onClick={this.deleteComment}>
+            Delete
+          </button>
+        </div>
       </li>
     );
   }

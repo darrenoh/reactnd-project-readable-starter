@@ -14,15 +14,15 @@ class PostList extends Component {
   };
 
   render () {
-    const {history} = this.props;
+    const {history, url} = this.props;
     let posts = this.props.posts.filter(post => !post.deleted);
     posts.sort(this.compare(this.state.sort));
     return (
       <div>
+        <button className="post-add" onClick={() => history.push((url === '/' ? '' : url) + '/add')}>Add post</button>
         <select className="post-sort" onChange={({target: {value}}) => this.setState({sort: value})}>
-          <option value="" disabled>Sort by:</option>
-          <option value="date">Date</option>
-          <option value="score">Vote score</option>
+          <option value="date">Sort by date</option>
+          <option value="score">Sort by score</option>
         </select>
         <ul className="post-list">
           {posts.map(post => (

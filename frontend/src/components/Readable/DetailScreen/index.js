@@ -6,6 +6,7 @@ import Navigation from '../Navigation';
 import NotFoundScreen from '../NotFoundScreen';
 import PostDetail from './PostDetail';
 import CommentList from './CommentList';
+import './index.css';
 
 class DetailScreen extends Component {
   componentDidMount() {
@@ -55,13 +56,15 @@ class DetailScreen extends Component {
       );
     } else {
       return (
-        <div>
+        <div className="readable-body">
           <Navigation categories={categories} history={history} />
-          <p className="App-intro">
-            {posts[id].title}
-          </p>
-          <PostDetail post={posts[id]} url={url} history={history} />
-          <CommentList parentId={id} />
+          <main>
+            <p className="App-intro">
+              {posts[id].title}
+            </p>
+            <PostDetail post={posts[id]} url={url} history={history} />
+            <CommentList parentId={id} />
+          </main>
         </div>
       );
     }

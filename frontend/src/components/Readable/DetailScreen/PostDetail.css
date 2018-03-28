@@ -1,0 +1,40 @@
+.post-detail {
+  text-align: left;
+  width: 100%;
+}
+
+.post-detail,
+.post-detail .post-meta,
+.post-detail .post-score,
+.post-detail .post-controls {
+  float: left;
+}
+
+.post-detail .post-body {
+  margin: 1em;
+}
+
+.post-detail .post-meta div,
+.post-detail .post-meta button,
+.post-detail .post-score button,
+.post-detail .post-score span,
+.post-detail .post-controls button {
+  float: left;
+  margin: 1em;
+}
+
+.post-detail .post-author:before {
+  content: 'Author: ';
+}
+
+.post-detail .post-timestamp:before {
+  content: 'Date: ';
+}
+
+.post-detail .post-comment-count:before {
+  content: 'Comment count: ';
+}
+
+.post-detail .post-votescore:before {
+  content: 'Post score: ';
+}

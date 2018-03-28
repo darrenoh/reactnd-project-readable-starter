@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link} from 'react-router-dom';
 import {voteUpPost, voteDownPost, deletePost} from '../../../../actions/post';
+import './ListItem.css';
 
 class ListItem extends Component {
   voteUpPost = () => {
@@ -30,14 +31,6 @@ class ListItem extends Component {
           <div className="post-timestamp">{timestamp.toLocaleString()}</div>
           <div className="post-comment-count">{post.commentCount}</div>
         </div>
-        <div className="post-controls">
-          <button className="post-edit" onClick={() => history.push('/' + category + '/' + post.id + '/edit')}>
-            Edit
-          </button>
-          <button className="post-delete" onClick={this.deletePost}>
-            Delete
-          </button>
-        </div>
         <div className="post-score">
           <span className="post-votescore">{post.voteScore}</span>
           <button className="post-vote-up" onClick={this.voteUpPost}>
@@ -45,6 +38,14 @@ class ListItem extends Component {
           </button>
           <button className="post-vote-down" onClick={this.voteDownPost}>
             Vote down
+          </button>
+        </div>
+        <div className="post-controls">
+          <button className="post-edit" onClick={() => history.push('/' + category + '/' + post.id + '/edit')}>
+            Edit
+          </button>
+          <button className="post-delete" onClick={this.deletePost}>
+            Delete
           </button>
         </div>
       </li>

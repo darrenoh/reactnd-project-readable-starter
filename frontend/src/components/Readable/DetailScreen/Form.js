@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {addComment, receiveComment, updateComment} from '../../../../actions/comment';
+import {addComment, receiveComment, updateComment} from '../../../actions/comment';
 
 class Form extends Component {
   state = {

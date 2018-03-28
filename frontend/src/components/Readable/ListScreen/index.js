@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom';
 import {receiveCategories} from '../../../actions/category';
 import {receiveCategoryPosts, receivePosts} from '../../../actions/post';
 import Navigation from '../Navigation';
@@ -51,7 +50,7 @@ class ListScreen extends Component {
         }
       }
     } = this.props;
-    let title = 'List of posts';
+    let title = 'Main page';
     categories = categories || {};
     category = category || '';
     if (category !== '') {
@@ -65,13 +64,14 @@ class ListScreen extends Component {
       }
     }
     return (
-      <div>
+      <div className="readable-body">
         <Navigation categories={categories} history={history} />
-        <p className="App-intro">
-          {title}
-        </p>
-        <Link to={(url === '/' ? '' : url) + '/add'}>Add</Link>
-        <PostList history={history} posts={posts} />
+        <main>
+          <p className="App-intro">
+            {title}
+          </p>
+          <PostList history={history} posts={posts} url={url} />
+        </main>
       </div>
     );
   }
