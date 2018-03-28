@@ -4,6 +4,7 @@ import Modal from 'react-modal';
 import {receivePostComments} from '../../../../actions/comment';
 import Comment from './Comment';
 import Form from './Form';
+import './index.css';
 
 class CommentList extends Component{
   state = {addModalOpen: false};

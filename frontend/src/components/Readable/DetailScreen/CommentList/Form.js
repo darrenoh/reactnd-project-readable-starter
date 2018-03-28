@@ -30,6 +30,7 @@ class Form extends Component {
     const comment = this.props.comment || {};
     return (
       <form className="comment-edit" onSubmit={this.updateComment}>
+        <p>{comment.id ? 'Edit comment' : 'Add comment'}</p>
         <div className="comment-edit-body">
           <textarea
             name="body"

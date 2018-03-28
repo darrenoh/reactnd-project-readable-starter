@@ -7,6 +7,7 @@ import {
 } from '../../../../../actions/comment';
 import Modal from 'react-modal';
 import Form from '../Form';
+import '../index.css';
 
 class Comment extends Component {
   state = {editModalOpen: false};
