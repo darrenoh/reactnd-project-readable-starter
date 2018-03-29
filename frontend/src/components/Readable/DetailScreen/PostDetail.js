@@ -27,7 +27,7 @@ class PostDetail extends Component {
   deletePost = () => {
     const {deletePost, post, history} = this.props;
     deletePost(post.id);
-    history.push('/');
+    history.push('/' + (post.category || ''));
   };
 
   render () {

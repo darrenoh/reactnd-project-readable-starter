@@ -40,6 +40,7 @@ class DetailScreen extends Component {
 
   render () {
     const categories = this.props.categories || {};
+    const category = this.props.match.params.category || 'post';
     const {
       posts,
       history,
@@ -50,7 +51,7 @@ class DetailScreen extends Component {
         }
       }
     } = this.props;
-    if (!posts[id] || posts[id].deleted) {
+    if (!posts[id] || posts[id].deleted || (posts[id].category || 'post') !== category) {
       return (
         <NotFoundScreen history={history} />
       );
