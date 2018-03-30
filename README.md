@@ -20,3 +20,7 @@ To get started developing right away:
 ## API Server
 
 Information about the API server and how to use it can be found in its [README file](api-server/README.md).
+
+## License and Contribution
+
+This project was forked from the [Starting server code for ReactND Readable Project](https://github.com/udacity/reactnd-project-readable-starter). Udacity provided permission to fork only for the purpose of fulfilling a class assignment. The author has no further rights to the project.
